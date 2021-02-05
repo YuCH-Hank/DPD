@@ -57,7 +57,7 @@ if show_im
 end
 
     results_file = sprintf('%s_SeedName_%s_SeedSize_%03d.mat', im_base_name, upper(seeds_data.seed_shape), sum(sum(initial_seeds_shape)));
-    save(results_file);
+    save(['Data\',results_file]);
 
 return %||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
