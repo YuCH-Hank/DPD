@@ -1,23 +1,23 @@
 clear, clc, close all; load('.\colormap.mat');
 tic
 %% ================== Read Figure  =======================
-i = 1;
+i = 7;
 data_dir = 'TEST';
 im_base_name = sprintf( 'TEST%d', i );
-data_type = 'png';
+data_type = 'bmp';
 im_file = sprintf( '%s/%s.%s', data_dir, im_base_name , data_type);
 im = double(imread(im_file));     % matlab imread -> unit8
 im_d = im(:,:,1); clear im;
 
 %% ================== Parameter ================== 
 par             = true;         % using parallel cpu
-d_samp          = true;         % using down sampling
-d_samp_size     = 300;          % down sampling size
-u_samp          = false;        % using up sampling
+d_samp          = false;        % using down sampling
+d_samp_size     = 150;          % down sampling size
+u_samp          = true;         % using up sampling
 
 %% ================== Figure Processing ================== 
+[r_, c_] = size(im_d);
 if (d_samp)
-    [r_, c_] = size(im_d);
     numrows = r_ / max(r_,c_) * d_samp_size;
     numcols = c_ / max(r_,c_) * d_samp_size;
     im_d = imresize(im_d, [numrows numcols]);
@@ -56,7 +56,7 @@ plot_                                                   = true;
 
 %%
 if (u_samp)
-    im = imresize(fields_data.fields, [r_ c_]);
+    im = imresize(fields_data.fields, [r_ c_], 'box');
     index = find(im < 1);
     im(index) = 1;
     im = round(im);
